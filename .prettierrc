@@ -1,0 +1,26 @@
+{
+  "jsxSingleQuote": false,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "overrides": [
+    {
+      "files": "*.tsx",
+      "options": {
+        "parser": "typescript",
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": true,
+        "printWidth": 100,
+        "tabWidth": 2,
+        "trailingComma": "all",
+        "bracketSpacing": true,
+        "arrowParens": "avoid",
+        "importOrder": ["^\\u0000", "^@?\\w", "^[./]"],
+        "importOrderSeparation": true
+      }
+    }
+  ]
+}
