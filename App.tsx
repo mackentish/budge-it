@@ -2,12 +2,12 @@ import { PortalProvider } from '@gorhom/portal';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MenuProvider } from 'react-native-popup-menu';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
-  useFonts,
+  useFonts as usePoppinsFonts,
   Poppins_400Regular,
   Poppins_400Regular_Italic,
   Poppins_500Medium,
@@ -15,13 +15,13 @@ import {
   Poppins_700Bold,
   Poppins_800ExtraBold,
 } from '@expo-google-fonts/poppins';
+import { useFonts } from 'expo-font';
 
 import { colors } from './src/constants/globalStyle';
 import TabNavigator from './src/navigation/TabNavigator';
 import { Login } from './src/screens';
 import { OverlayContext, UserContext } from './src/state/context';
 import { User } from './src/types';
-import { LoadingSpinner } from './src/components';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,7 +37,7 @@ function App(): JSX.Element {
   const [showOverlay, setShowOverlay] = useState(false);
   const [user, setUser] = useState<User | undefined>(undefined);
 
-  const [fontLoaded] = useFonts({
+  const [poppinsLoaded] = usePoppinsFonts({
     Poppins_400Regular,
     Poppins_400Regular_Italic,
     Poppins_500Medium,
@@ -46,8 +46,17 @@ function App(): JSX.Element {
     Poppins_800ExtraBold,
   });
 
-  if (!fontLoaded) {
-    return <LoadingSpinner />;
+  const [iconsLoaded] = useFonts({
+    Fontello: require('./assets/fonts/fontello.ttf'),
+  });
+
+  if (!poppinsLoaded || !iconsLoaded) {
+    // TODO: add loading state once spinner is fixed?
+    return (
+      <View style={styles.centeredView}>
+        <Text>Loading fonts...</Text>
+      </View>
+    );
   }
 
   return (
@@ -96,6 +105,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
