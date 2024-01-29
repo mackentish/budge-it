@@ -13,6 +13,7 @@ import {
   Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_700Bold,
+  Poppins_800ExtraBold,
 } from '@expo-google-fonts/poppins';
 
 import { colors } from './src/constants/globalStyle';
@@ -42,6 +43,7 @@ function App(): JSX.Element {
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_700Bold,
+    Poppins_800ExtraBold,
   });
 
   if (!fontLoaded) {

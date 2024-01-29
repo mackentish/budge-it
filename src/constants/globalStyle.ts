@@ -25,6 +25,7 @@ export const font = {
   medium: 'Poppins_500Medium',
   semiBold: 'Poppins_600SemiBold',
   bold: 'Poppins_700Bold',
+  extraBold: 'Poppins_800ExtraBold',
   // Note: there are more fonts available but I've only added what I need for now.
   // https://www.npmjs.com/package/@expo-google-fonts/poppins
 };
