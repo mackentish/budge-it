@@ -6,7 +6,7 @@ const getGroups = async () => {
     url: '/pocketGroups',
     method: 'GET',
     headers: {
-      'X-API-KEY': process.env.API_KEY,
+      'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
       Accept: 'application/json',
     },
   });
@@ -33,7 +33,7 @@ const deleteGroup = async (id: string) => {
     url: `/pocketGroups/${id}`,
     method: 'DELETE',
     headers: {
-      'X-API-KEY': process.env.API_KEY,
+      'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
       Accept: 'application/json',
     },
   });

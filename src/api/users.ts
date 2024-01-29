@@ -7,7 +7,7 @@ const loginUser = async (loginData: UserLogin) => {
       url: '/users/login',
       method: 'POST',
       headers: {
-        'X-API-KEY': process.env.API_KEY,
+        'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -26,7 +26,7 @@ const addUser = async (userData: UserRegister) => {
       url: '/users',
       method: 'POST',
       headers: {
-        'X-API-KEY': process.env.API_KEY,
+        'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -45,7 +45,7 @@ const addUserTag = async (tag: string) => {
       url: '/users/tags',
       method: 'POST',
       headers: {
-        'X-API-KEY': process.env.API_KEY,
+        'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -70,7 +70,7 @@ const changeUserTag = async ({
       url: '/users/tags',
       method: 'PUT',
       headers: {
-        'X-API-KEY': process.env.API_KEY,
+        'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },

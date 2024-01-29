@@ -13,7 +13,7 @@ function ClearTokenStore() {
 }
 
 const baseInstance = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
   headers: {
     Authorization: `Bearer ${tokenStore.accessToken}`,
   },
@@ -46,7 +46,9 @@ baseInstance.interceptors.response.use(
   async function (error) {
     const originalRequest = error.config;
 
-    if (originalRequest.url === `${process.env.API_URL}/users/refresh`) {
+    if (
+      originalRequest.url === `${process.env.EXPO_PUBLIC_API_URL}/users/refresh`
+    ) {
       ClearTokenStore();
       return Promise.reject(error);
     }
@@ -55,7 +57,7 @@ baseInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const { data: tokens } = await axios.post(
-          `${process.env.API_URL}/users/refresh`,
+          `${process.env.EXPO_PUBLIC_API_URL}/users/refresh`,
           {
             email: tokenStore.email,
             refreshToken: tokenStore.refreshToken,

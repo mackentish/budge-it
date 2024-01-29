@@ -6,7 +6,7 @@ const fetchPockets = async () => {
     url: '/pockets',
     method: 'GET',
     headers: {
-      'X-API-KEY': process.env.API_KEY,
+      'X-API-KEY': process.env.EXPO_PUBLIC_API_KEY,
       Accept: 'application/json',
     },
   });
