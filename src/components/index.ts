@@ -6,7 +6,6 @@ export * from './Dropdown';
 export * from './EditPocket';
 export * from './Icon';
 export * from './LoadingSpinner';
-export * from './Modal';
 export * from './Pocket';
 export * from './PocketGroup';
 export * from './PopupMenu';

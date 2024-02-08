@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Button, Modal } from '..';
-import { colors, font } from '../../constants/globalStyle';
+import { Button } from '../components/Button';
+import { Modal } from './Modal';
+import { colors, font } from '../constants/globalStyle';
 
 export function ConfirmDeleteGroup({
   isOpen,

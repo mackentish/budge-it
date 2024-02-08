@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import { Alert, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import { Button, Icon, LoadingSpinner, Modal } from '../../components';
+import { Button } from '../../components/Button';
+import { Icon } from '../../components/Icon';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { Modal } from '../../modals/Modal';
 import { colors, font, numbers } from '../../constants/globalStyle';
 import { useGroups, usePockets } from '../../state/queries';
 import { Pocket } from '../../types';

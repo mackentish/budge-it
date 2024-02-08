@@ -14,14 +14,12 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import {
-  AnimatedChevron,
-  AnimatedPressable,
-  Button,
-  CurrencyInput,
-  Dropdown,
-  Icon,
-} from '../../components';
+import { AnimatedChevron } from '../../components/AnimatedChevron';
+import { AnimatedPressable } from '../../components/AnimatedPressable';
+import { Button } from '../../components/Button';
+import { CurrencyInput } from '../../components/CurrencyInput';
+import { Dropdown } from '../../components/Dropdown';
+import { Icon } from '../../components/Icon';
 import { colors, font, numbers } from '../../constants/globalStyle';
 import { TransactionStackParams } from '../../navigation/TransactionNavigator';
 import { TransactionContext } from '../../state/context';

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon } from '../components';
+import { Icon } from './Icon';
 import { colors, font, numbers } from '../constants/globalStyle';
 import { OverlayContext } from '../state/context';
 

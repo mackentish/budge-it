@@ -2,7 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useState } from 'react';
 
-import { AddTransaction, SelectTags } from '../screens/sheets';
+import { AddTransaction } from '../screens/sheets/addTransaction';
+import { SelectTags } from '../screens/sheets/selectTags';
 import { TransactionContext } from '../state/context';
 
 export type TransactionStackParams = {

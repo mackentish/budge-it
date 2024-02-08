@@ -2,7 +2,9 @@ import { NavigationProp } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Icon, Tag } from '../../components';
+import { Button } from '../../components/Button';
+import { Icon } from '../../components/Icon';
+import * as Tag from '../../components/Tag';
 import { colors, font, numbers } from '../../constants/globalStyle';
 import { TransactionStackParams } from '../../navigation/TransactionNavigator';
 import { TransactionContext, UserContext } from '../../state/context';

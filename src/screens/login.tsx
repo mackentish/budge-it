@@ -3,7 +3,8 @@ import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Button, LoadingSpinner, Modal } from '../components';
+import { Button, LoadingSpinner } from '../components';
+import { Modal } from '../modals';
 import { colors, font } from '../constants/globalStyle';
 import {
   deviceHasBiometricsKey,

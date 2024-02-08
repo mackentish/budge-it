@@ -2,11 +2,14 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Icon, Modal, Sheet } from '..';
-import { colors, font, numbers } from '../../constants/globalStyle';
-import { AddGroup } from '../../screens/sheets';
-import { useGroups, usePockets } from '../../state/queries';
-import { Pocket } from '../../types';
+import { Button } from '../components/Button';
+import { Icon } from '../components/Icon';
+import { Sheet } from '../components/Sheet';
+import { Modal } from './Modal';
+import { colors, font, numbers } from '../constants/globalStyle';
+import { AddGroup } from '../screens/sheets/addGroup';
+import { useGroups, usePockets } from '../state/queries';
+import { Pocket } from '../types';
 
 export function AddToGroupModal({
   isOpen,

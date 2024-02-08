@@ -2,12 +2,14 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Modal, Sheet } from '..';
-import { colors, font } from '../../constants/globalStyle';
-import TransactionNavigator from '../../navigation/TransactionNavigator';
-import { useGroups, usePockets } from '../../state/queries';
-import { Pocket } from '../../types';
-import { currencyFormatter } from '../../utils';
+import { Button } from '../components/Button';
+import { Sheet } from '../components/Sheet';
+import { Modal } from './Modal';
+import { colors, font } from '../constants/globalStyle';
+import TransactionNavigator from '../navigation/TransactionNavigator';
+import { useGroups, usePockets } from '../state/queries';
+import { Pocket } from '../types';
+import { currencyFormatter } from '../utils';
 
 export function DeletePocketModal({
   isOpen,

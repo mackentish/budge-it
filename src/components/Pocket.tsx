@@ -6,7 +6,8 @@ import { EditPocket } from './EditPocket';
 import { colors, font, numbers } from '../constants/globalStyle';
 import { Pocket as PocketType } from '../types';
 import { currencyFormatter } from '../utils';
-import { AddToGroupModal, DeletePocketModal } from './modals';
+import { AddToGroupModal } from '../modals/AddToGroupModal';
+import { DeletePocketModal } from '../modals/DeletePocketModal';
 
 export function Pocket({ pocket }: { pocket: PocketType }) {
   // delete pocket

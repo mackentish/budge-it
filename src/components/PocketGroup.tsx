@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { AnimatedChevron, Icon, Pocket } from '.';
+import { AnimatedChevron } from './AnimatedChevron';
+import { Icon } from './Icon';
+import { Pocket } from './Pocket';
 import { colors, font, numbers } from '../constants/globalStyle';
 import { useGroups, usePockets } from '../state/queries';
 import { PocketGroup as PocketGroupType } from '../types';
 import { currencyFormatter } from '../utils';
-import { ConfirmDeleteGroup } from './modals';
+import { ConfirmDeleteGroup } from '../modals/ConfirmDeleteGroup';
 
 export function PocketGroup({ group }: { group: PocketGroupType }) {
   const [isOpen, setIsOpen] = useState(false);
