@@ -1,6 +1,14 @@
 import * as LocalAuthentication from 'expo-local-authentication';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button, LoadingSpinner } from '../components';
@@ -132,44 +140,49 @@ const LoginScreen = ({ setSignUp }: { setSignUp: () => void }) => {
 
   return (
     <View style={styles.container}>
-      <KeyboardAvoidingView style={styles.form}>
-        {loginUser.isPending && <LoadingSpinner />}
-        <View style={styles.section}>
-          <TextInput
-            placeholder="Username"
-            autoCapitalize="none"
-            textContentType="emailAddress"
-            onChangeText={setUsername}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            autoCapitalize="none"
-            secureTextEntry={true}
-            textContentType="password"
-            onChangeText={setPassword}
-            style={styles.input}
-          />
-          {persistNextLogin && <Text style={styles.text}>Biometrics enabled for next login</Text>}
-        </View>
-        <View style={styles.section}>
-          <Button
-            label="Log In"
-            size="large"
-            onPress={async () => {
-              if (persistNextLogin) {
-                // store credentials
-                Storage.SetItemAsync(userCredentialsKey, { email: username, password: password });
-                // don't think I need to run the below line, but leaving it here as a reminder
-                // setPersistNextLogin(false);
-              }
-              loginUser.mutate({
-                email: username,
-                password: password,
-              });
-            }}
-          />
-          <Button label="Create Account" size="large" type="secondary" onPress={setSignUp} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.form}
+      >
+        <View style={styles.inner}>
+          {loginUser.isPending && <LoadingSpinner />}
+          <View style={styles.section}>
+            <TextInput
+              placeholder="Username"
+              autoCapitalize="none"
+              textContentType="emailAddress"
+              onChangeText={setUsername}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Password"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              textContentType="password"
+              onChangeText={setPassword}
+              style={styles.input}
+            />
+            {persistNextLogin && <Text style={styles.text}>Biometrics enabled for next login</Text>}
+          </View>
+          <View style={styles.section}>
+            <Button
+              label="Log In"
+              size="large"
+              onPress={async () => {
+                if (persistNextLogin) {
+                  // store credentials
+                  Storage.SetItemAsync(userCredentialsKey, { email: username, password: password });
+                  // don't think I need to run the below line, but leaving it here as a reminder
+                  // setPersistNextLogin(false);
+                }
+                loginUser.mutate({
+                  email: username,
+                  password: password,
+                });
+              }}
+            />
+            <Button label="Create Account" size="large" type="secondary" onPress={setSignUp} />
+          </View>
         </View>
       </KeyboardAvoidingView>
       <BiometricsModal
@@ -194,51 +207,56 @@ const SignUpScreen = ({ setLogIn }: { setLogIn: () => void }) => {
 
   return (
     <View style={styles.container}>
-      <KeyboardAvoidingView style={styles.form}>
-        {createUser.isPending && <LoadingSpinner />}
-        <View style={styles.section}>
-          <TextInput placeholder="First Name" onChangeText={setFirstName} style={styles.input} />
-          <TextInput placeholder="Last Name" onChangeText={setLastName} style={styles.input} />
-          <TextInput
-            placeholder="Username"
-            autoCapitalize="none"
-            onChangeText={setUsername}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            autoCapitalize="none"
-            secureTextEntry={true}
-            onChangeText={setPassword}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Confirm Password"
-            autoCapitalize="none"
-            secureTextEntry={true}
-            onChangeText={setPasswordConfirm}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.section}>
-          <Button
-            label="Sign Up"
-            size="large"
-            onPress={() => {
-              // TODO: Validate inputs and show error messages under inputs if invalid
-              if (password !== passwordConfirm) {
-                Alert.alert('Passwords do not match');
-                return;
-              }
-              createUser.mutate({
-                firstName: firstName,
-                lastName: lastName,
-                email: username,
-                password: password,
-              });
-            }}
-          />
-          <Button label="Log In" size="large" type="secondary" onPress={setLogIn} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.form}
+      >
+        <View style={styles.inner}>
+          {createUser.isPending && <LoadingSpinner />}
+          <View style={styles.section}>
+            <TextInput placeholder="First Name" onChangeText={setFirstName} style={styles.input} />
+            <TextInput placeholder="Last Name" onChangeText={setLastName} style={styles.input} />
+            <TextInput
+              placeholder="Username"
+              autoCapitalize="none"
+              onChangeText={setUsername}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Password"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              onChangeText={setPassword}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Confirm Password"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              onChangeText={setPasswordConfirm}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.section}>
+            <Button
+              label="Sign Up"
+              size="large"
+              onPress={() => {
+                // TODO: Validate inputs and show error messages under inputs if invalid
+                if (password !== passwordConfirm) {
+                  Alert.alert('Passwords do not match');
+                  return;
+                }
+                createUser.mutate({
+                  firstName: firstName,
+                  lastName: lastName,
+                  email: username,
+                  password: password,
+                });
+              }}
+            />
+            <Button label="Log In" size="large" type="secondary" onPress={setLogIn} />
+          </View>
         </View>
       </KeyboardAvoidingView>
     </View>
@@ -273,17 +291,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.temp.gray,
   },
   container: {
-    display: 'flex',
-    flexDirection: 'column',
+    flex: 1,
     backgroundColor: colors.temp.gray,
-    height: '100%',
+  },
+  inner: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   form: {
+    flex: 1,
     padding: 20,
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
   },
   section: {
     display: 'flex',
