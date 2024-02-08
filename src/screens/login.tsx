@@ -1,14 +1,7 @@
 import * as LocalAuthentication from 'expo-local-authentication';
+import { useForm, Controller } from 'react-hook-form';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button, LoadingSpinner } from '../components';
@@ -68,11 +61,31 @@ const BiometricsModal = ({
  * Login screen for existing users
  */
 const LoginScreen = ({ setSignUp }: { setSignUp: () => void }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const { loginUser } = useUser();
   const [openBiometrics, setOpenBiometrics] = useState(false);
   const [persistNextLogin, setPersistNextLogin] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
+  async function onSubmit(data: { username: string; password: string }) {
+    if (persistNextLogin) {
+      // store credentials
+      Storage.SetItemAsync(userCredentialsKey, { email: data.username, password: data.password });
+      // don't think I need to run the below line, but leaving it here as a reminder
+      // setPersistNextLogin(false);
+    }
+    loginUser.mutate({
+      email: data.username,
+      password: data.password,
+    });
+  }
 
   useEffect(() => {
     // Only used for testing login flow in dev
@@ -147,40 +160,56 @@ const LoginScreen = ({ setSignUp }: { setSignUp: () => void }) => {
         <View style={styles.inner}>
           {loginUser.isPending && <LoadingSpinner />}
           <View style={styles.section}>
-            <TextInput
-              placeholder="Username"
-              autoCapitalize="none"
-              textContentType="emailAddress"
-              onChangeText={setUsername}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Password"
-              autoCapitalize="none"
-              secureTextEntry={true}
-              textContentType="password"
-              onChangeText={setPassword}
-              style={styles.input}
-            />
+            {/** Username */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'Missing username.',
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="Username"
+                    autoCapitalize="none"
+                    textContentType="emailAddress"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, errors.username && styles.errorInput]}
+                  />
+                )}
+                name="username"
+              />
+              {errors.username && <Text style={styles.error}>{errors.username.message}</Text>}
+            </View>
+
+            {/** Password */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'Missing password.',
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="Password"
+                    autoCapitalize="none"
+                    secureTextEntry={true}
+                    textContentType="password"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, errors.password && styles.errorInput]}
+                  />
+                )}
+                name="password"
+              />
+              {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
+            </View>
             {persistNextLogin && <Text style={styles.text}>Biometrics enabled for next login</Text>}
           </View>
           <View style={styles.section}>
-            <Button
-              label="Log In"
-              size="large"
-              onPress={async () => {
-                if (persistNextLogin) {
-                  // store credentials
-                  Storage.SetItemAsync(userCredentialsKey, { email: username, password: password });
-                  // don't think I need to run the below line, but leaving it here as a reminder
-                  // setPersistNextLogin(false);
-                }
-                loginUser.mutate({
-                  email: username,
-                  password: password,
-                });
-              }}
-            />
+            <Button label="Log In" size="large" onPress={handleSubmit(onSubmit)} />
             <Button label="Create Account" size="large" type="secondary" onPress={setSignUp} />
           </View>
         </View>
@@ -198,12 +227,45 @@ const LoginScreen = ({ setSignUp }: { setSignUp: () => void }) => {
  * Sign up screen for new users
  */
 const SignUpScreen = ({ setLogIn }: { setLogIn: () => void }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
   const { createUser } = useUser();
+  const {
+    control,
+    handleSubmit,
+    setError,
+    watch,
+    formState: { isSubmitted, errors },
+  } = useForm({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      username: '',
+      password: '',
+      passwordConfirm: '',
+    },
+  });
+  const password = watch('password', ''); // Get the value of the password field
+
+  function onSubmit(data: {
+    firstName: string;
+    lastName: string;
+    username: string;
+    password: string;
+    passwordConfirm: string;
+  }) {
+    if (data.password !== data.passwordConfirm) {
+      setError('passwordConfirm', {
+        type: 'manual',
+        message: 'Passwords do not match.',
+      });
+      return;
+    }
+    createUser.mutate({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.username,
+      password: data.password,
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -214,47 +276,139 @@ const SignUpScreen = ({ setLogIn }: { setLogIn: () => void }) => {
         <View style={styles.inner}>
           {createUser.isPending && <LoadingSpinner />}
           <View style={styles.section}>
-            <TextInput placeholder="First Name" onChangeText={setFirstName} style={styles.input} />
-            <TextInput placeholder="Last Name" onChangeText={setLastName} style={styles.input} />
-            <TextInput
-              placeholder="Username"
-              autoCapitalize="none"
-              onChangeText={setUsername}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Password"
-              autoCapitalize="none"
-              secureTextEntry={true}
-              onChangeText={setPassword}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Confirm Password"
-              autoCapitalize="none"
-              secureTextEntry={true}
-              onChangeText={setPasswordConfirm}
-              style={styles.input}
-            />
+            {/** First Name */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'This is required.',
+                  maxLength: 100,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="First Name"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, errors.firstName && styles.errorInput]}
+                  />
+                )}
+                name="firstName"
+              />
+              {errors.firstName && <Text style={styles.error}>{errors.firstName.message}</Text>}
+            </View>
+
+            {/** Last Name */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'This is required.',
+                  maxLength: 100,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="Last Name"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, errors.lastName && styles.errorInput]}
+                  />
+                )}
+                name="lastName"
+              />
+              {errors.lastName && <Text style={styles.error}>{errors.lastName.message}</Text>}
+            </View>
+
+            {/** Username */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'This is required.',
+                  maxLength: 100,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="Username"
+                    autoCapitalize="none"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, errors.lastName && styles.errorInput]}
+                  />
+                )}
+                name="username"
+              />
+              {errors.username && <Text style={styles.error}>{errors.username.message}</Text>}
+            </View>
+
+            {/** Password */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'This is required.',
+                  maxLength: 100,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="Password"
+                    autoCapitalize="none"
+                    secureTextEntry={true}
+                    textContentType="password"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, errors.password && styles.errorInput]}
+                  />
+                )}
+                name="password"
+              />
+              {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
+            </View>
+
+            {/** Confirm Password */}
+            <View style={styles.inputGroup}>
+              <Controller
+                control={control}
+                rules={{
+                  required: 'This is required.',
+                  maxLength: 100,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    placeholder="Confirm Password"
+                    autoCapitalize="none"
+                    secureTextEntry={true}
+                    textContentType="password"
+                    onBlur={onBlur}
+                    onChangeText={value => {
+                      onChange(value);
+                      if (value !== password) {
+                        setError('passwordConfirm', {
+                          type: 'manual',
+                          message: 'Passwords do not match.',
+                        });
+                      }
+                      if (isSubmitted) {
+                        // Validate on change if form has been submitted
+                        handleSubmit(onSubmit);
+                      }
+                    }}
+                    value={value}
+                    style={[styles.input, errors.passwordConfirm && styles.errorInput]}
+                  />
+                )}
+                name="passwordConfirm"
+              />
+              {errors.passwordConfirm && (
+                <Text style={styles.error}>{errors.passwordConfirm.message}</Text>
+              )}
+            </View>
           </View>
           <View style={styles.section}>
-            <Button
-              label="Sign Up"
-              size="large"
-              onPress={() => {
-                // TODO: Validate inputs and show error messages under inputs if invalid
-                if (password !== passwordConfirm) {
-                  Alert.alert('Passwords do not match');
-                  return;
-                }
-                createUser.mutate({
-                  firstName: firstName,
-                  lastName: lastName,
-                  email: username,
-                  password: password,
-                });
-              }}
-            />
+            <Button label="Sign Up" size="large" onPress={handleSubmit(onSubmit)} />
             <Button label="Log In" size="large" type="secondary" onPress={setLogIn} />
           </View>
         </View>
@@ -312,12 +466,26 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  errorInput: {
+    borderColor: colors.temp.red,
+    borderWidth: 1,
+  },
+  inputGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+  },
   text: {
     color: colors.temp.black,
     fontFamily: font.semiBold,
     fontSize: 16,
     textAlign: 'center',
     marginTop: 20,
+  },
+  error: {
+    color: colors.temp.red,
+    fontFamily: font.regular,
+    fontSize: 12,
   },
 });
 
