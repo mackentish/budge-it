@@ -4,6 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "npx expo start",
+    "start:ngrok": "ngrok http --domain=jackal-adapting-jointly.ngrok-free.app 3001",
     "dev": "npx expo start --tunnel --clear",
     "clear-watchman": "watchman watch-del-all",
     "android": "expo start --android",
