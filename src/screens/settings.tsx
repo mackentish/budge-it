@@ -9,7 +9,7 @@ import { UserContext } from '../state/context';
 /**
  * Default page for user settings. User has access to other screens from here
  */
-export function Profile() {
+export function Settings() {
   const { setUser } = useContext(UserContext);
   return (
     <SafeAreaView style={styles.safeView}>
@@ -18,6 +18,7 @@ export function Profile() {
         <AnimatedPressable style={styles.signOutBtn} onPress={() => setUser(undefined)}>
           <Text style={styles.btnText}>Sign Out</Text>
         </AnimatedPressable>
+        <Text style={styles.headerText}>TODO: add navigator and add template page</Text>
       </View>
     </SafeAreaView>
   );

@@ -1,16 +1,8 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import React, { useRef } from 'react';
-import {
-  Alert,
-  RefreshControl,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Icon, LoadingSpinner, Pocket, PocketGroup, PopupMenu, Sheet } from '../components';
+import { LoadingSpinner, Pocket, PocketGroup, PopupMenu, Sheet } from '../components';
 import { colors, font } from '../constants/globalStyle';
 import TransactionNavigator from '../navigation/TransactionNavigator';
 import { useGroups, usePockets } from '../state/queries';
@@ -25,7 +17,6 @@ export function Dashboard() {
   // BottomSheets
   const addPocketSheet = useRef<BottomSheet>(null);
   const addGroupSheet = useRef<BottomSheet>(null);
-  const addTransactionSheet = useRef<BottomSheet>(null);
 
   if (fetchPockets.isError || fetchGroups.isError) {
     return (
@@ -64,21 +55,6 @@ export function Dashboard() {
   return (
     <SafeAreaView style={styles.safeView}>
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerDate}>
-            {new Date().toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </Text>
-          <View style={styles.headerButtons}>
-            <Button type="tertiary" onPress={() => addTransactionSheet.current?.expand()}>
-              <Text style={styles.smBtnTxt}>Add Transaction</Text>
-              <Icon name="plus" style={styles.icon} />
-            </Button>
-            <Button type="tertiary" onPress={() => Alert.alert('TODO: use template press')}>
-              <Text style={styles.smBtnTxt}>Use Template</Text>
-              <Icon name="template" style={styles.icon} />
-            </Button>
-          </View>
-        </View>
         <ScrollView
           refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={isLoading} />}
         >
@@ -103,9 +79,6 @@ export function Dashboard() {
         <Sheet bottomSheetRef={addGroupSheet}>
           <AddGroup />
         </Sheet>
-        <Sheet bottomSheetRef={addTransactionSheet}>
-          <TransactionNavigator />
-        </Sheet>
       </View>
     </SafeAreaView>
   );
@@ -114,36 +87,11 @@ export function Dashboard() {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: colors.temp.white,
+    backgroundColor: colors.temp.gray,
   },
   container: {
     backgroundColor: colors.temp.gray,
     flex: 1,
-  },
-  headerContainer: {
-    flexDirection: 'column',
-    backgroundColor: colors.temp.white,
-    borderBottomRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    paddingHorizontal: 30,
-    paddingBottom: 10,
-    shadowColor: colors.temp.black,
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  headerDate: {
-    fontSize: 30,
-    fontFamily: font.bold,
-    alignSelf: 'stretch',
-  },
-  headerButtons: {
-    flexDirection: 'row',
-    paddingVertical: 15,
-    gap: 15,
-    alignItems: 'center',
-    alignSelf: 'stretch',
   },
   pocketContainer: {
     marginTop: 15,

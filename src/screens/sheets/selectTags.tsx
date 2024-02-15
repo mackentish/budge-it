@@ -68,6 +68,7 @@ export function SelectTags({ navigation }: Props) {
     <View style={styles.container}>
       <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" style={styles.chevron} />
+        <Text style={styles.backBtnTxt}>Back</Text>
       </Pressable>
 
       <Text style={styles.header}>Tags</Text>
@@ -130,12 +131,10 @@ export function SelectTags({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    gap: 25,
+    gap: 10,
     flex: 1,
-    backgroundColor: colors.temp.gray,
-    paddingTop: 30,
-    paddingBottom: 10,
     paddingHorizontal: 20,
+    paddingBottom: 10,
   },
   row: {
     flexDirection: 'row',
@@ -143,9 +142,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backBtn: {
-    position: 'absolute',
-    top: 0,
-    left: 10,
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  backBtnTxt: {
+    fontSize: 18,
+    fontFamily: font.semiBold,
+    color: colors.temp.black,
   },
   chevron: {
     fontSize: 22,
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    fontSize: 22,
+    fontSize: 24,
     fontFamily: font.bold,
     alignSelf: 'center',
   },

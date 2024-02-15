@@ -16,9 +16,9 @@ export default function TransactionNavigator() {
   const [transactionTags, setTransactionTags] = useState<string[]>([]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer independent>
       <TransactionContext.Provider value={{ transactionTags, setTransactionTags }}>
-        <Navigator screenOptions={{ headerShown: false }}>
+        <Navigator screenOptions={{ headerShown: false }} initialRouteName="addTransaction">
           <Screen name="addTransaction" component={AddTransaction} />
           <Screen name="selectTags" component={SelectTags} />
         </Navigator>

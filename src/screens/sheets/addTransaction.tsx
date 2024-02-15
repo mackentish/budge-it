@@ -1,10 +1,10 @@
-import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { NavigationProp } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,7 +12,6 @@ import {
   View,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AnimatedChevron } from '../../components/AnimatedChevron';
 import { AnimatedPressable } from '../../components/AnimatedPressable';
@@ -43,8 +42,6 @@ export function AddTransaction({ navigation }: Props) {
   const { transactionTags, setTransactionTags } = useContext(TransactionContext);
   const [note, setNote] = useState('');
 
-  const { close } = useBottomSheet();
-  const { bottom } = useSafeAreaInsets();
   const { fetchPockets } = usePockets();
   const { createTransaction } = useTransactions();
   const isValid =
@@ -75,22 +72,9 @@ export function AddTransaction({ navigation }: Props) {
   }
 
   return (
-    <View style={styles.flex}>
-      <KeyboardAvoidingView
-        behavior="padding"
-        style={styles.flex}
-        keyboardVerticalOffset={bottom + 18}
-      >
+    <SafeAreaView style={styles.flex}>
+      <KeyboardAvoidingView behavior="padding" style={styles.flex}>
         <View style={styles.container}>
-          <Pressable
-            onPress={() => {
-              Keyboard.dismiss();
-              close();
-            }}
-            style={styles.closeBtn}
-          >
-            <Icon name="x" style={styles.close} />
-          </Pressable>
           <ScrollView contentContainerStyle={styles.scroll}>
             <TextInput
               value={transactionTitle}
@@ -160,31 +144,32 @@ export function AddTransaction({ navigation }: Props) {
               />
             </View>
             <View style={styles.flex} />
-            <Button
-              label="Add Transaction"
-              onPress={() => {
-                createTransaction.mutate(
-                  {
-                    name: transactionTitle,
-                    amount: parseFloat(transactionAmount.replace(/[^0-9.-]+/g, '')),
-                    date,
-                    // it's okay to force unwrap here because we know that inflow and outflow are defined
-                    inflow: inflow!.value,
-                    outflow: outflow!.value,
-                    tags: transactionTags,
-                    note,
-                  },
-                  {
-                    onSuccess: () => {
-                      fetchPockets.refetch();
-                      close();
-                      resetForm();
+            <View style={styles.btnContainer}>
+              <Button
+                label="Add Transaction"
+                onPress={() => {
+                  createTransaction.mutate(
+                    {
+                      name: transactionTitle,
+                      amount: parseFloat(transactionAmount.replace(/[^0-9.-]+/g, '')),
+                      date,
+                      // it's okay to force unwrap here because we know that inflow and outflow are defined
+                      inflow: inflow!.value,
+                      outflow: outflow!.value,
+                      tags: transactionTags,
+                      note,
                     },
-                  },
-                );
-              }}
-              disabled={!isValid}
-            />
+                    {
+                      onSuccess: () => {
+                        fetchPockets.refetch();
+                        resetForm();
+                      },
+                    },
+                  );
+                }}
+                disabled={!isValid}
+              />
+            </View>
           </ScrollView>
         </View>
       </KeyboardAvoidingView>
@@ -202,18 +187,13 @@ export function AddTransaction({ navigation }: Props) {
         buttonTextColorIOS={colors.temp.black}
         accentColor={colors.temp.black}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    gap: 25,
     flex: 1,
-    backgroundColor: colors.temp.gray,
-    paddingTop: 30,
-    paddingBottom: 10,
     paddingHorizontal: 20,
   },
   flex: {
@@ -221,15 +201,6 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flexGrow: 1,
-  },
-  closeBtn: {
-    position: 'absolute',
-    top: 0,
-    left: 10,
-  },
-  close: {
-    fontSize: 18,
-    color: colors.temp.black,
   },
   chevron: {
     fontSize: 16,
@@ -298,5 +269,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: font.regular,
     color: colors.temp.darkGray,
+  },
+  btnContainer: {
+    marginBottom: 10,
   },
 });

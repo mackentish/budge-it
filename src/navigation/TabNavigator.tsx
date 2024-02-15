@@ -5,18 +5,18 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon } from '../components';
 import { colors, font } from '../constants/globalStyle';
-import { Dashboard, Profile, Summary, Templates } from '../screens';
+import { Dashboard, Settings, Summary, Transactions } from '../screens';
 
 function HomeIcon({ color }: { color: string }) {
   return <Icon name="home" style={[styles.icon, { color: color }]} />;
 }
-function TemplateIcon({ color }: { color: string }) {
-  return <Icon name="template" style={[styles.icon, { color: color }]} />;
+function TransactionIcon({ color }: { color: string }) {
+  return <Icon name="plus" style={[styles.icon, { color: color }]} />;
 }
 function SummaryIcon({ color }: { color: string }) {
   return <Icon name="summary" style={[styles.icon, { color: color }]} />;
 }
-function ProfileIcon({ color }: { color: string }) {
+function UserIcon({ color }: { color: string }) {
   return <Icon name="user" style={[styles.icon, { color: color }]} />;
 }
 
@@ -54,11 +54,11 @@ export default function TabNavigator() {
       />
       <Screen
         options={{
-          tabBarIcon: TemplateIcon,
-          tabBarLabel: 'Templates',
+          tabBarIcon: TransactionIcon,
+          tabBarLabel: 'Transactions',
         }}
-        name="templates"
-        component={Templates}
+        name="transactions"
+        component={Transactions}
       />
       <Screen
         options={{
@@ -70,11 +70,11 @@ export default function TabNavigator() {
       />
       <Screen
         options={{
-          tabBarIcon: ProfileIcon,
-          tabBarLabel: 'Profile',
+          tabBarIcon: UserIcon,
+          tabBarLabel: 'Settings',
         }}
-        name="profile"
-        component={Profile}
+        name="settings"
+        component={Settings}
       />
     </Navigator>
   );
