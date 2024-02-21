@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 import { colors } from '../constants/globalStyle';
 
 export function AnimatedChevron({ chevronUp, color }: { chevronUp: boolean; color?: string }) {
@@ -38,14 +38,14 @@ export function AnimatedChevron({ chevronUp, color }: { chevronUp: boolean; colo
         ],
       }}
     >
-      <Icon name="chevron-down" style={[styles.icon, color && { color: color }]} />
+      <Icon name={IconNames.ChevronDown} style={[styles.icon, color && { color: color }]} />
     </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   icon: {
-    fontSize: 10,
+    fontSize: 18,
     color: colors.temp.darkGray,
   },
 });

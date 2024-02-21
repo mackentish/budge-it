@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 import { colors, font, numbers } from '../constants/globalStyle';
 
 export function Selected({ tagName, onPress }: { tagName: string; onPress: () => void }) {
   return (
     <Pressable style={styles.tag} onPress={onPress}>
       <Text style={styles.tagName}>{tagName}</Text>
-      <Icon name="x" style={styles.x} />
+      <Icon name={IconNames.X} style={styles.x} />
     </Pressable>
   );
 }
@@ -17,7 +17,7 @@ export function Available({ tagName, onPress }: { tagName: string; onPress: () =
   return (
     <Pressable style={styles.tag} onPress={onPress}>
       <Text style={styles.tagName}>{tagName}</Text>
-      <Icon name="plus" style={styles.plus} />
+      <Icon name={IconNames.Plus} style={styles.plus} />
     </Pressable>
   );
 }
@@ -46,7 +46,7 @@ export function Add({ createFn }: { createFn: (tag: string) => void }) {
               setNewTagName('');
             }}
           >
-            <Icon name="check" style={styles.check} />
+            <Icon name={IconNames.Check} style={styles.check} />
           </Pressable>
         ) : (
           <Pressable
@@ -55,7 +55,7 @@ export function Add({ createFn }: { createFn: (tag: string) => void }) {
               setNewTagName('');
             }}
           >
-            <Icon name="x" style={styles.xBlack} />
+            <Icon name={IconNames.X} style={styles.xBlack} />
           </Pressable>
         )}
       </View>
@@ -64,7 +64,7 @@ export function Add({ createFn }: { createFn: (tag: string) => void }) {
     return (
       <Pressable style={styles.createTag} onPress={() => setIsCreating(true)}>
         <Text style={styles.createTagText}>New Tag</Text>
-        <Icon name="edit" style={styles.edit} />
+        <Icon name={IconNames.Edit} style={styles.edit} />
       </Pressable>
     );
   }
@@ -99,7 +99,7 @@ export function Edit({
               setIsEditing(false);
             }}
           >
-            <Icon name="check" style={styles.check} />
+            <Icon name={IconNames.Check} style={styles.check} />
           </Pressable>
         )}
         <Pressable
@@ -108,7 +108,7 @@ export function Edit({
             setNewTagName(tagName);
           }}
         >
-          <Icon name="x" style={styles.xBlack} />
+          <Icon name={IconNames.X} style={styles.xBlack} />
         </Pressable>
       </View>
     );
@@ -116,7 +116,7 @@ export function Edit({
     return (
       <Pressable style={styles.tag} onPress={() => setIsEditing(true)}>
         <Text style={styles.tagName}>{tagName}</Text>
-        <Icon name="edit" style={styles.editWhite} />
+        <Icon name={IconNames.Edit} style={styles.editWhite} />
       </Pressable>
     );
   }
@@ -157,15 +157,15 @@ const styles = StyleSheet.create({
     color: colors.temp.black,
   },
   x: {
-    fontSize: 12,
+    fontSize: 20,
     color: colors.temp.white,
   },
   xBlack: {
-    fontSize: 14,
+    fontSize: 20,
     color: colors.temp.black,
   },
   plus: {
-    fontSize: 16,
+    fontSize: 22,
     color: colors.temp.white,
   },
   edit: {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     color: colors.temp.white,
   },
   check: {
-    fontSize: 14,
+    fontSize: 18,
     color: colors.temp.black,
   },
 });

@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../components/Button';
-import { Icon } from '../../components/Icon';
+import { Icon, IconNames } from '../../components/Icon';
 import * as Tag from '../../components/Tag';
 import { colors, font, numbers } from '../../constants/globalStyle';
 import { TransactionStackParams } from '../../navigation/TransactionNavigator';
@@ -67,7 +67,7 @@ export function SelectTags({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
-        <Icon name="chevron-left" style={styles.chevron} />
+        <Icon name={IconNames.ChevronLeft} style={styles.chevron} />
         <Text style={styles.backBtnTxt}>Back</Text>
       </Pressable>
 
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     color: colors.temp.black,
   },
   chevron: {
-    fontSize: 22,
+    fontSize: 18,
     color: colors.temp.black,
   },
   flex: {

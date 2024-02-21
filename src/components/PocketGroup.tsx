@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AnimatedChevron } from './AnimatedChevron';
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 import { Pocket } from './Pocket';
 import { colors, font, numbers } from '../constants/globalStyle';
 import { useGroups, usePockets } from '../state/queries';
@@ -24,7 +24,7 @@ export function PocketGroup({ group }: { group: PocketGroupType }) {
     <View style={styles.container}>
       <Pressable onPress={() => setIsOpen(!isOpen)} style={styles.header}>
         <View style={styles.title}>
-          <Icon name="group" style={styles.icon} />
+          <Icon name={IconNames.Group} style={styles.icon} />
           <Text style={styles.name}>{group.name}</Text>
         </View>
         <View style={styles.headerGroup}>

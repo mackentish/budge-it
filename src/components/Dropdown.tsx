@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 import { AnimatedChevron } from './AnimatedChevron';
 import { colors, font, numbers } from '../constants/globalStyle';
 import { DropdownOption } from '../types';
@@ -125,7 +125,7 @@ export function Dropdown({
                   style={[styles.topOption, isSelected(topOption) && styles.selected]}
                 >
                   <Text style={styles.selectableText}>{topOption.label}</Text>
-                  {isSelected(topOption) && <Icon name="check" style={styles.icon} />}
+                  {isSelected(topOption) && <Icon name={IconNames.Check} style={styles.icon} />}
                 </Pressable>
               )}
               {filteredOptions.map((o, i) => {
@@ -144,7 +144,7 @@ export function Dropdown({
                     style={[styles.selectable, isSelected(o) && styles.selected]}
                   >
                     <Text style={styles.selectableText}>{o.label}</Text>
-                    {isSelected(o) && <Icon name="check" style={styles.icon} />}
+                    {isSelected(o) && <Icon name={IconNames.Check} style={styles.icon} />}
                   </Pressable>
                 );
               })}
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     color: colors.temp.midGray,
   },
   icon: {
-    fontSize: 14,
+    fontSize: 18,
     color: colors.temp.midGray,
   },
   options: {

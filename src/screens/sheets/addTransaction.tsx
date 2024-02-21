@@ -18,7 +18,7 @@ import { AnimatedPressable } from '../../components/AnimatedPressable';
 import { Button } from '../../components/Button';
 import { CurrencyInput } from '../../components/CurrencyInput';
 import { Dropdown } from '../../components/Dropdown';
-import { Icon } from '../../components/Icon';
+import { Icon, IconNames } from '../../components/Icon';
 import { colors, font, numbers } from '../../constants/globalStyle';
 import { TransactionStackParams } from '../../navigation/TransactionNavigator';
 import { TransactionContext } from '../../state/context';
@@ -131,7 +131,7 @@ export function AddTransaction({ navigation }: Props) {
                     </Text>
                   )}
                 </View>
-                <Icon name="chevron-right" style={styles.chevron} />
+                <Icon name={IconNames.ChevronRight} style={styles.chevron} />
               </AnimatedPressable>
 
               <TextInput
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   chevron: {
-    fontSize: 16,
+    fontSize: 18,
     color: colors.temp.darkGray,
   },
   title: {

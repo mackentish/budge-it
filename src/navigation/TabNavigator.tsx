@@ -3,21 +3,21 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon } from '../components';
+import { Icon, IconNames } from '../components';
 import { colors, font } from '../constants/globalStyle';
 import { Dashboard, Settings, Summary, Transactions } from '../screens';
 
 function HomeIcon({ color }: { color: string }) {
-  return <Icon name="home" style={[styles.icon, { color: color }]} />;
+  return <Icon name={IconNames.Home} style={[styles.icon, { color: color }]} />;
 }
 function TransactionIcon({ color }: { color: string }) {
-  return <Icon name="plus" style={[styles.icon, { color: color }]} />;
+  return <Icon name={IconNames.Transaction} style={[styles.icon, { color: color }]} />;
 }
 function SummaryIcon({ color }: { color: string }) {
-  return <Icon name="summary" style={[styles.icon, { color: color }]} />;
+  return <Icon name={IconNames.Summary} style={[styles.icon, { color: color }]} />;
 }
-function UserIcon({ color }: { color: string }) {
-  return <Icon name="user" style={[styles.icon, { color: color }]} />;
+function SettingsIcon({ color }: { color: string }) {
+  return <Icon name={IconNames.Settings} style={[styles.icon, { color: color }]} />;
 }
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -70,7 +70,7 @@ export default function TabNavigator() {
       />
       <Screen
         options={{
-          tabBarIcon: UserIcon,
+          tabBarIcon: SettingsIcon,
           tabBarLabel: 'Settings',
         }}
         name="settings"

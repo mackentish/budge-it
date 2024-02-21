@@ -8,6 +8,7 @@ import { Pocket as PocketType } from '../types';
 import { currencyFormatter } from '../utils';
 import { AddToGroupModal } from '../modals/AddToGroupModal';
 import { DeletePocketModal } from '../modals/DeletePocketModal';
+import { IconNames } from './Icon';
 
 export function Pocket({ pocket }: { pocket: PocketType }) {
   // delete pocket
@@ -20,21 +21,21 @@ export function Pocket({ pocket }: { pocket: PocketType }) {
   const pocketMenuOptions = [
     {
       label: 'Rename',
-      icon: 'edit',
+      icon: IconNames.Edit,
       action: () => setIsEditing(true),
     },
     ...(!pocket.groupId
       ? [
           {
             label: 'Add to group',
-            icon: 'plus',
+            icon: IconNames.Plus,
             action: () => setAddToGroupOpen(true),
           },
         ]
       : []),
     {
       label: 'Delete',
-      icon: 'delete',
+      icon: IconNames.Trash,
       action: () => setDeleteOpen(true),
       color: colors.temp.red,
     },

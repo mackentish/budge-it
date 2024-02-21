@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../components/Button';
-import { Icon } from '../components/Icon';
+import { Icon, IconNames } from '../components/Icon';
 import { Sheet } from '../components/Sheet';
 import { Modal } from './Modal';
 import { colors, font, numbers } from '../constants/globalStyle';
@@ -30,7 +30,7 @@ export function AddToGroupModal({
       <Modal visible={isOpen}>
         <View style={styles.container}>
           <Pressable onPress={() => setIsOpen(false)} style={styles.closeBtn}>
-            <Icon name="x" style={styles.icon} />
+            <Icon name={IconNames.X} style={styles.icon} />
           </Pressable>
           <Text style={styles.header}>Add to Group</Text>
           {fetchGroups.data ? (
@@ -48,7 +48,7 @@ export function AddToGroupModal({
                     }}
                     style={[styles.group, selectedGroup === g.id && styles.selected]}
                   >
-                    <Icon name="group" style={styles.groupIcon} />
+                    <Icon name={IconNames.Group} style={styles.groupIcon} />
                     <Text style={styles.groupName}>{g.name}</Text>
                   </Pressable>
                 ))}
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   icon: {
-    fontSize: 16,
+    fontSize: 22,
     color: colors.temp.darkGray,
   },
   header: {

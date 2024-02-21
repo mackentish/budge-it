@@ -4,7 +4,7 @@ import { Alert, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'r
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { Button } from '../../components/Button';
-import { Icon } from '../../components/Icon';
+import { Icon, IconNames } from '../../components/Icon';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { Modal } from '../../modals/Modal';
 import { colors, font, numbers } from '../../constants/globalStyle';
@@ -31,7 +31,7 @@ function GroupPocket({
           </Text>
         </View>
         <Pressable onPress={onPress}>
-          <Icon name="x" style={styles.icon} />
+          <Icon name={IconNames.X} style={styles.icon} />
         </Pressable>
       </View>
     </View>
@@ -60,7 +60,7 @@ function PocketOption({
           {currencyFormatter.format(amount)}
         </Text>
       </View>
-      <Icon name="plus" style={styles.icon} />
+      <Icon name={IconNames.Plus} style={styles.icon} />
     </Pressable>
   );
 }
@@ -115,7 +115,7 @@ export function AddGroup() {
   return (
     <View style={styles.container}>
       <Pressable onPress={closeAndReset} style={styles.closeBtn}>
-        <Icon name="x" style={styles.icon} />
+        <Icon name={IconNames.X} style={styles.icon} />
       </Pressable>
       <TextInput
         value={groupName}
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     left: 10,
   },
   icon: {
-    fontSize: 18,
+    fontSize: 24,
   },
   inputGroup: {
     flexDirection: 'column',

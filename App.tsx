@@ -15,7 +15,6 @@ import {
   Poppins_700Bold,
   Poppins_800ExtraBold,
 } from '@expo-google-fonts/poppins';
-import { useFonts } from 'expo-font';
 
 import { colors } from './src/constants/globalStyle';
 import TabNavigator from './src/navigation/TabNavigator';
@@ -46,11 +45,7 @@ function App(): JSX.Element {
     Poppins_800ExtraBold,
   });
 
-  const [iconsLoaded] = useFonts({
-    Fontello: require('./assets/fonts/fontello.ttf'),
-  });
-
-  if (!poppinsLoaded || !iconsLoaded) {
+  if (!poppinsLoaded) {
     // TODO: add loading state once spinner is fixed?
     return (
       <View style={styles.centeredView}>

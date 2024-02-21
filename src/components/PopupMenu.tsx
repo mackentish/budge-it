@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 import { colors, font, numbers } from '../constants/globalStyle';
 import { OverlayContext } from '../state/context';
 
 interface Option {
   label: string;
-  icon: string;
+  icon: IconNames;
   action: () => void;
   color?: string;
 }
@@ -21,7 +21,7 @@ export function PopupMenu({ options }: { options: Option[] }) {
   return (
     <Menu onClose={() => setShowOverlay(false)} onOpen={() => setShowOverlay(true)}>
       <MenuTrigger>
-        <Icon name="dot-3" style={styles.icon} />
+        <Icon name={IconNames.Dot3} style={styles.icon} />
       </MenuTrigger>
       <MenuOptions
         customStyles={{

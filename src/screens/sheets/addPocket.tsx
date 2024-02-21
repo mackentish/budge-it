@@ -2,7 +2,7 @@ import { useBottomSheet } from '@gorhom/bottom-sheet';
 import React, { useState } from 'react';
 import { Alert, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { Button, CurrencyInput, Dropdown, Icon, LoadingSpinner } from '../../components';
+import { Button, CurrencyInput, Dropdown, Icon, IconNames, LoadingSpinner } from '../../components';
 import { colors, font, numbers } from '../../constants/globalStyle';
 import { useGroups, usePockets } from '../../state/queries';
 import { DropdownOption } from '../../types';
@@ -57,7 +57,7 @@ export function AddPocket() {
   return (
     <View style={styles.container}>
       <Pressable onPress={closeAndReset} style={styles.closeBtn}>
-        <Icon name="x" style={styles.icon} />
+        <Icon name={IconNames.X} style={styles.icon} />
       </Pressable>
       <TextInput
         value={pocketName}
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     left: 10,
   },
   icon: {
-    fontSize: 18,
+    fontSize: 24,
   },
   iconSm: {
     alignSelf: 'center',
